@@ -1,7 +1,7 @@
 # Личный проект «Большое путешествие» [![Build status][travis-image]][travis-url]
 
 * Студент: [Oleg Lucasenco](https://up.htmlacademy.ru/ecmascript/11/user/1395971).
-* Наставник: `Неизвестно`.
+* Наставник: `Александр Быков`.
 
 ---
 
