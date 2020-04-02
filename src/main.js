@@ -266,7 +266,7 @@ const tripMainTripControlsElement = document.querySelector(`.trip-main__trip-con
 
 render(tripMainElement, createTripMainTripInfoTemplate(), `afterbegin`);
 
-const tripMainTripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`)
+const tripMainTripInfoElement = tripMainElement.querySelector(`.trip-main__trip-info`);
 render(tripMainTripInfoElement, createTriInfoCostTemplate(), `beforeend`);
 
 render(tripMainTripControlsElement, createTripControlsTripTabsTemplate(), `beforeend`);
