@@ -1,3 +1,5 @@
+import {convertDateToHoursMinutes, getDifferenceBetweenTimeInHours} from '../utils.js';
+
 const createOfferMarkup = ({title, cost}) => {
 
   return (
@@ -10,7 +12,7 @@ const createOfferMarkup = ({title, cost}) => {
 };
 
 export const createTripEventsItemTemplate = (event) => {
-  const {tripTypes, location, time, takeTime, cost, order} = event;
+  const {tripTypes, location, time, cost, order} = event;
   const offerMarkup = order.map((it) => createOfferMarkup(it)).join(`\n`);
 
   return (
@@ -23,11 +25,11 @@ export const createTripEventsItemTemplate = (event) => {
 
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="2019-03-18T10:30">${time.startTime}</time>
+            <time class="event__start-time" datetime="2019-03-18T10:30">${convertDateToHoursMinutes(time.start)}</time>
             &mdash;
-            <time class="event__end-time" datetime="2019-03-18T11:00">${time.endTime}</time>
+            <time class="event__end-time" datetime="2019-03-18T11:00">${convertDateToHoursMinutes(time.end)}</time>
           </p>
-          <p class="event__duration">${takeTime}</p>
+          <p class="event__duration">${getDifferenceBetweenTimeInHours(time.start, time.end)}</p>
         </div>
 
         <p class="event__price">

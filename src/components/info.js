@@ -1,10 +1,17 @@
 import {convertDate} from '../utils.js';
 
-export const createTripMainTripInfoTemplate = (trip, tripDays) => {
-  const {startDate, endDate} = tripDays;
+export const createTripMainTripInfoTemplate = (events) => {
+  const cityNamesSet = new Set();
+  const allDate = events.map((el) => Date.parse(el.time.start));
 
-  const tripMarkup = trip.reduce((acc, el, index) => {
-    return `${acc}${el}${trip.length - 2 >= index ? ` &mdash; ` : ``}`;
+  events.forEach((el) => {
+    cityNamesSet.add(el.location);
+  });
+
+  const cityNames = [...cityNamesSet];
+
+  const tripMarkup = cityNames.reduce((acc, el, index) => {
+    return `${acc}${el}${cityNames.length - 2 >= index ? ` &mdash; ` : ``}`;
   }, ``);
 
   return (
@@ -12,7 +19,7 @@ export const createTripMainTripInfoTemplate = (trip, tripDays) => {
       <div class="trip-info__main">
         <h1 class="trip-info__title">${tripMarkup}</h1>
 
-        <p class="trip-info__dates">${convertDate(startDate)}&nbsp;&mdash;&nbsp;${endDate}</p>
+        <p class="trip-info__dates">${convertDate(new Date(Math.min(...allDate)))}&nbsp;&mdash;&nbsp;${convertDate(new Date())}</p>
       </div>
     </section>`
   );
