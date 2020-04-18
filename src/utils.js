@@ -1,4 +1,4 @@
-import {MONTH_NAMES} from "./const.js";
+import {MONTH_NAMES} from './const.js';
 
 export const convertDate = (date) => {
   return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
