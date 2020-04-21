@@ -1,4 +1,4 @@
-import {CITY_NAMES, TRIP_TYPES, TRIP_DESTINATION} from "../const.js";
+import {CITY_NAMES, TRIP_TYPES, TRIP_DESTINATION} from '../const.js';
 
 const getRandomCityName = () => {
   return CITY_NAMES[getRandomIntegerNumber(0, CITY_NAMES.length)];

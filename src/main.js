@@ -8,8 +8,8 @@ import {createTripDaysItemTemplate} from './components/days-item.js';
 import {createTripEventsItemFormTemplate} from './components/events-item-form.js';
 import {createTripEventsItemTemplate} from './components/events-item.js';
 
-import {generateFilters} from "./mock/filter.js";
-import {generateEvents} from "./mock/event.js";
+import {generateFilters} from './mock/filter.js';
+import {generateEvents} from './mock/event.js';
 
 const EVENT_COUNT = 4;
 const SHOWING_EVENTS_COUNT_ON_START = 4;
