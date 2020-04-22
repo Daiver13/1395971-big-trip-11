@@ -1,4 +1,37 @@
-export const createTripEventsItemFormTemplate = () => {
+const createPhotosMarkup = (url) => {
+  return (
+    `<img class="event__photo" src="${url}" alt="Event photo">`
+  );
+};
+
+const createOfferMarkup = () => {
+  return (
+    `<div class="event__offer-selector">
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-comfort-1" type="checkbox" name="event-offer-comfort" checked>
+      <label class="event__offer-label" for="event-offer-comfort-1">
+        <span class="event__offer-title">Switch to comfort class</span>
+        &plus;
+        &euro;&nbsp;<span class="event__offer-price">100</span>
+      </label>
+    </div>`
+  );
+};
+
+const createDestinationList = (location) => {
+  return (
+    `<option value="${location}"></option>
+      <option value="Geneva"></option>
+      <option value="Chamonix"></option>
+      <option value="Saint Petersburg"></option>`
+  );
+};
+
+
+export const createTripEventsItemFormTemplate = (event) => {
+  const {images, destination, location} = event;
+
+  const photosMarkup = images.map((it) => createPhotosMarkup(it)).join(`\n`);
+
   return (
     `<li class="trip-events__item">
       <form class="trip-events__item  event  event--edit" action="#" method="post">
@@ -6,7 +39,7 @@ export const createTripEventsItemFormTemplate = () => {
           <div class="event__type-wrapper">
             <label class="event__type  event__type-btn" for="event-type-toggle-1">
               <span class="visually-hidden">Choose event type</span>
-              <img class="event__type-icon" width="17" height="17" src="img/icons/bus.png" alt="Event type icon">
+              <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
             </label>
             <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -20,7 +53,7 @@ export const createTripEventsItemFormTemplate = () => {
                 </div>
 
                 <div class="event__type-item">
-                  <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus" checked>
+                  <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus">
                   <label class="event__type-label  event__type-label--bus" for="event-type-bus-1">Bus</label>
                 </div>
 
@@ -45,7 +78,7 @@ export const createTripEventsItemFormTemplate = () => {
                 </div>
 
                 <div class="event__type-item">
-                  <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight">
+                  <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight" checked>
                   <label class="event__type-label  event__type-label--flight" for="event-type-flight-1">Flight</label>
                 </div>
               </fieldset>
@@ -73,14 +106,11 @@ export const createTripEventsItemFormTemplate = () => {
 
           <div class="event__field-group  event__field-group--destination">
             <label class="event__label  event__type-output" for="event-destination-1">
-              Bus to
+              Flight to
             </label>
-            <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="" list="destination-list-1">
+            <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${location}" list="destination-list-1">
             <datalist id="destination-list-1">
-              <option value="Amsterdam"></option>
-              <option value="Geneva"></option>
-              <option value="Chamonix"></option>
-              <option value="Saint Petersburg"></option>
+              ${createDestinationList(location)}
             </datalist>
           </div>
 
@@ -107,6 +137,32 @@ export const createTripEventsItemFormTemplate = () => {
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">Cancel</button>
         </header>
+        <section class="event__details">
+          <section class="event__section  event__section--offers">
+            <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+
+            <div class="event__available-offers">
+              ${createOfferMarkup()}
+              ${createOfferMarkup()}
+              ${createOfferMarkup()}
+              ${createOfferMarkup()}
+              ${createOfferMarkup()}
+            </div>
+          </section>
+
+          <section class="event__section  event__section--destination">
+            <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+            <p class="event__destination-description">
+              ${destination}
+            </p>
+
+            <div class="event__photos-container">
+              <div class="event__photos-tape">
+                ${photosMarkup}
+              </div>
+            </div>
+          </section>
+        </section>
       </form>
     </li>`
   );
