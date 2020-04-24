@@ -1,4 +1,4 @@
-import {convertDate} from '../utils.js';
+import {convertDate, createElement} from '../utils.js';
 
 const createTripDaysItemMarkup = (day, count) => {
   return (
@@ -9,7 +9,7 @@ const createTripDaysItemMarkup = (day, count) => {
   );
 };
 
-export const createTripDaysItemTemplate = (date, count) => {
+const createTripDaysItemTemplate = (date, count) => {
   const tripDaysItemMarkup = createTripDaysItemMarkup(date, count);
 
   return (
@@ -20,3 +20,27 @@ export const createTripDaysItemTemplate = (date, count) => {
     </li>`
   );
 };
+
+export default class DaysItem {
+  constructor(date, count) {
+    this._element = null;
+    this._date = date;
+    this._count = count;
+  }
+
+  getTemplate() {
+    return createTripDaysItemTemplate(this._date, this._count);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

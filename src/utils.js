@@ -1,5 +1,10 @@
 import {MONTH_NAMES} from './const.js';
 
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
 export const convertDate = (date) => {
   return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()}`;
 };
@@ -24,4 +29,22 @@ export const getDifferenceBetweenTimeInHours = (start, end) => {
   m = Math.floor((differenceInMiliseconds / 1000 / 60 / 60 - h) * 60);
 
   return `${h ? `${h}H ` : ``}${m < 10 ? `0${m}` : m}M`;
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
 };
