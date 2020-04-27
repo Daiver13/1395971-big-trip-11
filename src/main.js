@@ -18,6 +18,31 @@ const SHOWING_EVENTS_COUNT_ON_START = 4;
 
 const events = generateEvents(EVENT_COUNT);
 
+const renderEvents = (eventListElement, event) => {
+  const replaceEventItemForm = () => {
+    eventListElement.replaceChild(eventsItemFormComponent.getElement(), eventsItemComponent.getElement());
+  };
+
+  const replaceEventItem = () => {
+    eventListElement.replaceChild(eventsItemComponent.getElement(), eventsItemFormComponent.getElement());
+  };
+
+  const eventsItemFormComponent = new EventsItemFormComponent(events[0]);
+  const submitForm = eventsItemFormComponent.getElement().querySelector(`.event--edit`);
+  submitForm.addEventListener(`submit`, (evt) => {
+    evt.preventDefault();
+    replaceEventItem();
+  });
+
+  const eventsItemComponent = new EventsItemComponent(event);
+  const editItemButton = eventsItemComponent.getElement().querySelector(`.event__rollup-btn`);
+  editItemButton.addEventListener(`click`, () => {
+    replaceEventItemForm();
+  });
+
+  render(eventListElement, eventsItemComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
 const tripMainElement = document.querySelector(`.trip-main`);
 const tripMainTripControlsElement = document.querySelector(`.trip-main__trip-controls`);
 
@@ -41,9 +66,9 @@ render(tripDaisContainer, new DaysItemComponent(events[0].time.start, 1).getElem
 const tripDaisItemContainer = tripDaisContainer.querySelector(`.trip-days__item`);
 const tripEventsListContainer = tripDaisItemContainer.querySelector(`.trip-events__list`);
 
-render(tripEventsListContainer, new EventsItemFormComponent(events[0]).getElement(), RenderPosition.BEFOREEND);
-
 let showingEventsCount = SHOWING_EVENTS_COUNT_ON_START;
 
-events.slice(1, showingEventsCount)
-  .forEach((event) => render(tripEventsListContainer, new EventsItemComponent(event).getElement(), RenderPosition.BEFOREEND));
+events.slice(0, showingEventsCount)
+  .forEach((event) => {
+    renderEvents(tripEventsListContainer, event);
+  });
