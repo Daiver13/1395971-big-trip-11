@@ -1,4 +1,4 @@
-import {convertDateToHoursMinutes, getDifferenceBetweenTimeInHours} from '../utils.js';
+import {convertDateToHoursMinutes, getDifferenceBetweenTimeInHours, createElement} from '../utils.js';
 
 const createOfferMarkup = ({title, cost}) => {
 
@@ -11,7 +11,7 @@ const createOfferMarkup = ({title, cost}) => {
   );
 };
 
-export const createTripEventsItemTemplate = (event) => {
+const createTripEventsItemTemplate = (event) => {
   const {tripTypes, location, time, cost, order} = event;
   const offerMarkup = order.map((it) => createOfferMarkup(it)).join(`\n`);
 
@@ -48,3 +48,26 @@ export const createTripEventsItemTemplate = (event) => {
     </li>`
   );
 };
+
+export default class EventsItem {
+  constructor(event) {
+    this._element = null;
+    this._event = event;
+  }
+
+  getTemplate() {
+    return createTripEventsItemTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,6 +1,6 @@
-import {convertDate} from '../utils.js';
+import {convertDate, createElement} from '../utils.js';
 
-export const createTripMainTripInfoTemplate = (events) => {
+const createTripMainTripInfoTemplate = (events) => {
   const cityNamesSet = new Set();
   const allDate = events.map((el) => Date.parse(el.time.start));
 
@@ -24,3 +24,26 @@ export const createTripMainTripInfoTemplate = (events) => {
     </section>`
   );
 };
+
+export default class Info {
+  constructor(events) {
+    this._element = null;
+    this._events = events;
+  }
+
+  getTemplate() {
+    return createTripMainTripInfoTemplate(this._events);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

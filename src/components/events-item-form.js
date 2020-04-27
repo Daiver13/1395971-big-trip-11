@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createPhotosMarkup = (url) => {
   return (
     `<img class="event__photo" src="${url}" alt="Event photo">`
@@ -27,7 +29,7 @@ const createDestinationList = (location) => {
 };
 
 
-export const createTripEventsItemFormTemplate = (event) => {
+const createTripEventsItemFormTemplate = (event) => {
   const {images, destination, location} = event;
 
   const photosMarkup = images.map((it) => createPhotosMarkup(it)).join(`\n`);
@@ -167,3 +169,26 @@ export const createTripEventsItemFormTemplate = (event) => {
     </li>`
   );
 };
+
+export default class EventsItemForm {
+  constructor(event) {
+    this._element = null;
+    this._event = event;
+  }
+
+  getTemplate() {
+    return createTripEventsItemFormTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
